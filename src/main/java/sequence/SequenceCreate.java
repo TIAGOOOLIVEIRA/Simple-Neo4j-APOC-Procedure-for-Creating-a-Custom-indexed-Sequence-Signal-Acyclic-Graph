@@ -55,6 +55,9 @@ public class SequenceCreate {
                             "WITH range(1, " + size + ") AS freq " +
                             "FOREACH(f in freq | CREATE (:Fs" + frequency + " {id:f * " + freqcycles + "}));";
 
+        Map<String, Object> paramseq = new HashMap<>();
+        paramseq.put("relName", relName);
+
         String createseq =
         "MATCH (fs:Fs" + frequency + ") " +
         "WITH fs " +
@@ -63,7 +66,7 @@ public class SequenceCreate {
         "FOREACH(i in RANGE(0, length(fss)-2) | " +
         "        FOREACH(fs1 in [fss[i]] | " +
         "                FOREACH(fs2 in [fss[i+1]] | " +
-        "                        CREATE UNIQUE (fs1)-[:" + relName + "]->(fs2))))";
+        "                        CREATE UNIQUE (fs1)-[:{relName}]->(fs2))))";
 
         String createindex = "CREATE INDEX ON :Fs" + frequency + "(id);";
 
@@ -72,7 +75,7 @@ public class SequenceCreate {
 
         try (Transaction transact = db.beginTx()) {
             db.execute(createnodes);
-            db.execute(createseq);
+            db.execute(createseq, paramseq);
             db.execute(createindex);
             transact.success();
         } catch (Throwable ex) {
