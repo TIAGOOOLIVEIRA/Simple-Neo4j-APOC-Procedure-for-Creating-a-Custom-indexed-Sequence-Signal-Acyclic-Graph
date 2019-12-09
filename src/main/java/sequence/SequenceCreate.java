@@ -44,13 +44,6 @@ public class SequenceCreate {
 
         BigDecimal freqcycles = new BigDecimal((1d)/((double)frequency), MATH_CTX);
 
-
-        //Map<String, Object> paramsnodes = new HashMap<String, Object>();
-        //paramsnodes.put("size", size);
-        //paramsnodes.put("frequency", frequency);
-        //paramsnodes.put("freqCycles", freqcycles);
-        //paramsnodes.put("relName", relName);
-
         String createnodes =
                             "WITH range(1, " + size + ") AS freq " +
                             "FOREACH(f in freq | CREATE (:Fs" + frequency + " {id:f * " + freqcycles + "}));";
