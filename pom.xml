@@ -21,7 +21,7 @@
     </build>
 
     <properties>
-        <neo4j.version>3.5.2</neo4j.version>
+        <neo4j.version>5.26.21</neo4j.version>
         <assertj.version>3.13.2</assertj.version>
         <junit-jupiter.version>5.5.2</junit-jupiter.version>
     </properties>
